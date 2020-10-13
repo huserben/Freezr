@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  freezr.backend:
+    image: ${DOCKER_REGISTRY-}freezrbackend
+    build:
+      context: .
+      dockerfile: Freezr.Backend/Dockerfile
+
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - d:/Temp/postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: freezr
+    ports:
+        - 5432:5432
