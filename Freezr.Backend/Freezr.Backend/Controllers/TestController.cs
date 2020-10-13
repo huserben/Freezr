@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Freezr.Backend.Model;
+using Freezr.Backend.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -11,16 +13,18 @@ namespace Freezr.Backend.Controllers
     public class TestController : ControllerBase
     {
         private readonly ILogger<TestController> logger;
+        private readonly IFridgeRepository fridgeRepository;
 
-        public TestController(ILogger<TestController> logger)
+        public TestController(ILogger<TestController> logger, IFridgeRepository fridgeRepository)
         {
             this.logger = logger;
+            this.fridgeRepository = fridgeRepository;
         }
 
         [HttpGet]
-        public string Get()
+        public IEnumerable<Fridge> Get()
         {
-            return "Works";
+            return fridgeRepository.GetFridges();
         }
     }
 }
