@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Freezr.Backend.Model;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Freezr.Backend.Repositories;
+using Freezr.Entities;
+using Freezr.Messaging;
+using Freezr.Messaging.Messages.Events;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -25,6 +26,17 @@ namespace Freezr.Backend.Controllers
         public IEnumerable<Fridge> Get()
         {
             return fridgeRepository.GetFridges();
+        }
+
+        [HttpPost]
+        public IActionResult AddNewFridge(string name)
+        {
+            var fridge = new Fridge { Name = name };
+
+            var eventMessage = new FridgeAddedEvent { Fridge = fridge,  };
+            MessageQueue.Publish(eventMessage);
+
+            return Created($"api/fridges", fridge);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Freezr.Backend.Model;
+﻿using Freezr.Entities;
+using Freezr.Model;
 using System.Collections.Generic;
 
 namespace Freezr.Backend.Repositories

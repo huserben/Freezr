@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Freezr.Services.Database": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

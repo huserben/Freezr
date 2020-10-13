@@ -1,31 +1,7 @@
-version: '3.4'
+version: "3.4"
 
 services:
-  freezr.backend:
-    container_name: freezr.backend
-    image: ${DOCKER_REGISTRY-}freezrbackend
-    build:
-      context: .
-      dockerfile: Freezr.Backend/Dockerfile
-
-    ports:
-      - 32777:80
-      - 32778:443
-
-    depends_on:
-      - "db"
-
-  freezr.frontend:
-    container_name: freezr.frontend
-    build:
-      context: ../freezr.frontend
-      dockerfile: Dockerfile_prod
-    
-    ports:
-      - '1337:80'
-
   db:
-    container_name: freezr.database
     image: postgres
     restart: always
     volumes:
@@ -34,4 +10,47 @@ services:
       POSTGRES_PASSWORD: mysecretpassword
       POSTGRES_DB: freezr
     ports:
-        - 5432:5432
+      - 5432:5432
+
+  message-queue:
+    image: nats
+    ports:
+      - 4222:4222
+      - 6222:6222
+      - 8222:8222
+
+  freezr.frontend:
+    build:
+      context: ../freezr.frontend
+      dockerfile: Dockerfile_prod
+
+    ports:
+      - "1337:80"
+
+  freezr.databaseservice:
+    build:
+      context: .
+      dockerfile: Services/Freezr.Services.Database/Dockerfile
+
+    depends_on:
+      - "message-queue"
+
+    environment:
+      MESSAGE_QUEUE_URL: nats://message-queue:4222
+      PostgresDocker: "Server=db;Port=5432;Database=freezr;User Id=postgres;Password=mysecretpassword;"
+
+  freezr.backend:
+    build:
+      context: .
+      dockerfile: Freezr.Backend/Dockerfile
+
+    environment:
+      MESSAGE_QUEUE_URL: nats://message-queue:4222
+
+    ports:
+      - 32777:80
+      - 32778:443
+
+    depends_on:
+      - "db"
+      - "message-queue"

@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Freezr.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace Freezr.Backend.Model
+namespace Freezr.Model
 {
     public class FreezrContext : DbContext
     {
@@ -16,6 +17,8 @@ namespace Freezr.Backend.Model
 
             var fridge = new Fridge { FridgeId = 1, Name = "Kitchen" };
             modelBuilder.Entity<Fridge>().HasData(fridge);
+
+            modelBuilder.Entity<Fridge>().Property(f => f.FridgeId).ValueGeneratedOnAdd();
         }
     }
 }

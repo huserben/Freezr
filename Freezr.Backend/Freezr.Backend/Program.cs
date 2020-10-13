@@ -1,4 +1,4 @@
-using Freezr.Backend.Model;
+using Freezr.Model;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

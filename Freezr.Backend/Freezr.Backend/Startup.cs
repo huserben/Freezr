@@ -1,5 +1,5 @@
-using Freezr.Backend.Model;
 using Freezr.Backend.Repositories;
+using Freezr.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
