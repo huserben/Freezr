@@ -44,6 +44,8 @@ namespace Freezr.Backend
 
             app.UseAuthorization();
 
+            app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().Build());
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
