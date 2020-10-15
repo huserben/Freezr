@@ -16,6 +16,12 @@ spec:
       labels:
         app: freezr-backend
     spec:
+      initContainers:
+          - name: check-db-ready
+            image: postgres
+            command: ['sh', '-c', 
+            'until pg_isready -h db -p 5432; 
+            do echo waiting for database; sleep 2; done;']
       containers:
       - env:
         - name: MESSAGE_QUEUE_URL
