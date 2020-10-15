@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 
 const App = () => {
-  const apiUrl = 'http://localhost:32777/test'
+  const apiUrl = 'http://freezr-backend:32777/test'
   
   const [state, setState] = React.useState({ fridge: {}, loading: true });
 
