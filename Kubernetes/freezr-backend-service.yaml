@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: freezr-backend
+spec:
+  selector:
+    app: freezr-backend
+
+  ports:
+  - name: "32777"
+    port: 32777
+    targetPort: 80
+  - name: "32778"
+    port: 32778
+    targetPort: 443
+
+  type: LoadBalancer

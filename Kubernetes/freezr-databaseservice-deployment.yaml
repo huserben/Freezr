@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freezr-databaseservice-deployment
+  labels:
+    app: freezr-databaseservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: freezr-databaseservice
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: freezr-databaseservice
+    spec:
+      containers:
+      - env:
+        - name: MESSAGE_QUEUE_URL
+          value: nats://message-queue:4222
+        - name: PostgresDocker
+          value: Server=db;Port=5432;Database=freezr;User Id=postgres;Password=mysecretpassword;
+        image: huserben/freezr.databaseservice
+        imagePullPolicy: "Always"
+        name: freezr-databaseservice
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

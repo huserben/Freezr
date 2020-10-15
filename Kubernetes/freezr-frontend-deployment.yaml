@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freezr-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: freezr-frontend
+  template:
+    metadata:
+      labels:
+        app: freezr-frontend
+    spec:
+      containers:
+      - image: huserben/freezr.frontend
+        imagePullPolicy: "Never"
+        name: freezr-frontend
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

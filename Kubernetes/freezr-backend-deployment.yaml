@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freezr-backend-deployment
+  labels:
+    app: freezr-backend
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: freezr-backend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: freezr-backend
+    spec:
+      containers:
+      - env:
+        - name: MESSAGE_QUEUE_URL
+          value: nats://message-queue:4222
+        image: huserben/freezr.backend
+        imagePullPolicy: "Always"
+        name: freezr-backend
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

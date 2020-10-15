@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: freezr-frontend
+
+spec:
+  selector:
+    app: freezer-frontend
+  ports:
+    - protocol: TCP
+      port: 1337
+      targetPort: 80
+  
+  type: LoadBalancer

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-queue-deployment
+  labels:
+    app: message-queue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: message-queue
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: message-queue
+    spec:
+      containers:
+      - image: nats
+        imagePullPolicy: "IfNotPresent"
+        name: message-queue
+        ports:
+        - containerPort: 4222
+        - containerPort: 6222
+        - containerPort: 8222
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

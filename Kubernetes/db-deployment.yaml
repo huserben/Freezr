@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+  labels:
+    app: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_DB
+          value: freezr
+        - name: POSTGRES_PASSWORD
+          value: mysecretpassword
+        image: postgres
+        imagePullPolicy: "IfNotPresent"
+        name: db
+        ports:
+        - containerPort: 5432
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgresvolume
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: postgresvolume
+        persistentVolumeClaim:
+          claimName: postgresvolume
+status: {}
