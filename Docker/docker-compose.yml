@@ -3,7 +3,6 @@ version: "3.4"
 services:
   db:
     image: postgres
-    restart: always
     volumes:
       - d:/Temp/postgres-data:/var/lib/postgresql/data
     environment:
@@ -20,6 +19,7 @@ services:
       - 8222:8222
 
   freezr.frontend:
+    image: huserben/freezr.frontend
     build:
       context: ../freezr.frontend
       dockerfile: Dockerfile_prod
@@ -28,8 +28,9 @@ services:
       - "1337:80"
 
   freezr.databaseservice:
+    image: huserben/freezr.databaseservice
     build:
-      context: .
+      context: ../Freezr.Backend/
       dockerfile: Services/Freezr.Services.Database/Dockerfile
 
     depends_on:
@@ -40,8 +41,9 @@ services:
       PostgresDocker: "Server=db;Port=5432;Database=freezr;User Id=postgres;Password=mysecretpassword;"
 
   freezr.backend:
+    image: huserben/freezr.backend
     build:
-      context: .
+      context: ../Freezr.Backend/
       dockerfile: Freezr.Backend/Dockerfile
 
     environment:
