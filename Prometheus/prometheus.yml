@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 1m
+
+scrape_configs:
+  - job_name: 'backend'
+    static_configs:
+      - targets: ['freezr-backend:50505']
+
+  - job_name: 'database-service'
+    static_configs:
+      - targets: ['freezr-databaseservice:50505']

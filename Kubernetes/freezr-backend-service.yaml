@@ -13,5 +13,8 @@ spec:
   - name: "32778"
     port: 32778
     targetPort: 443
+  - name: "prometheus"
+    port: 50505
+    targetPort: 50505
 
   type: LoadBalancer

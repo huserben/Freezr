@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-deployment
+  labels:
+    app: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+        - image: huserben/freezr.prometheus
+          imagePullPolicy: "Always"
+          name: prometheus
+          ports:
+            - containerPort: 9090
+          resources: {}
+
+      restartPolicy: Always
+      serviceAccountName: ""
+status: {}

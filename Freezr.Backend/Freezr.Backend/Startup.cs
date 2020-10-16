@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Prometheus;
 
 namespace Freezr.Backend
 {
@@ -38,6 +39,8 @@ namespace Freezr.Backend
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMetricServer(50505);
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -49,6 +52,7 @@ namespace Freezr.Backend
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapMetrics();
             });
         }
     }
